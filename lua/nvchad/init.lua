@@ -7,34 +7,6 @@ if config.tabufline.enabled then
   require "nvchad.tabufline.lazyload"
 end
 
--- Command to toggle NvDash
-new_cmd("Nvdash", function()
-  if vim.g.nvdash_displayed then
-    require("nvchad.tabufline").close_buffer()
-  else
-    require("nvchad.nvdash").open()
-  end
-end, {})
-
--- load nvdash
-if config.nvdash.load_on_startup then
-  vim.defer_fn(function()
-    local bufs = vim.api.nvim_list_bufs()
-
-    if #vim.fn.argv() == 0 and (#bufs == 1 and bufs[1] == 1) then
-      require("nvchad.nvdash").open()
-    end
-  end, 0)
-end
-
--- command to toggle cheatsheet
-new_cmd("NvCheatsheet", function()
-  if vim.g.nvcheatsheet_displayed then
-    require("nvchad.tabufline").close_buffer()
-  else
-    require("nvchad.cheatsheet." .. config.cheatsheet.theme)()
-  end
-end, {})
 
 -- redraw dashboard on VimResized event
 vim.api.nvim_create_autocmd("VimResized", {
